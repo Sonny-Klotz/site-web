@@ -7,9 +7,9 @@
     
     <body>
 		<?php
-		include("menu.php");
-		include("header.php");
-		include("footer.php");
+		include("includes/menu.php");
+		include("includes/header.php");
+		include("includes/footer.php");
 		?>
 		
         <div id="corps">

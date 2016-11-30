@@ -1,0 +1,116 @@
+# HTML
+
+Décrit le contenu et la logique : paragraphes, mots importants, etc ...
+L'apparence visuelle va être choisie avec les feuilles de style
+
+## balise
+
+en paire : <nomBalise attribut="val" ></nomBalise> attribut = liste d'attribut (optionnel)
+orpheline : <br attribut="val" />
+inline : obligatoirement a l'interieur d'un bloc, pas de retour a la ligne
+bloc : crée auto un retour à la ligne avt et apres
+universelles : <span>inline</span> <div>bloc</div>
+	intéret, donner un attribut 'class' ou 'id' pour appliquer un style (CSS)
+
+## squelette
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Un titre</title>
+	</head>
+	<body>
+	</body>
+</html>
+
+## texte
+
+paragraphe : <p> texte ici </p>
+retour a la ligne : <br />
+titre : <h1> </h1> ... <h6> </h6> <!-- Pas de h2 sans h1, etc -->
+insister sur : <em> texte important </em>
+important : <strong> texte tres important </strong>
+marques : <mark> le texte ressort visuellement </mark>
+liste non ordonnée : <ul> <!--Liste d'elements--> </ul>  <li>Un element</li>
+liste ordonnée : <ol> <!--Liste d'elements--> </ol> <li>Un element</li>
+
+## liens
+
+site : <a href="URL">texte du lien</a>
+page de son site (.html dans meme arborescence): <a href="chemin relatif">texte du lien</a>
+ancre (au préalable) : donner un id à une balise <balise id="monAncre">
+ancre (pt de repere) sur la meme page : <a href="#monAncre">lien vers l'ancre</a>
+ancre sur une autre page :  <a href="chemin relatif#monAncre">lien vers l'ancre</a>
+infobulle (quand on passe la souris sur le lien) : attribut 'title' à un lien
+
+## tables
+
+contenu de la table : <table> contenu </table>
+titre : <caption>titre de table</caption>
+en-tete : <th>nom en-tete</th>
+ligne : <tr>contient les colonnes ou headers</tr>
+colonne : <td>contenu de la cellule</td>
+fusion de cellules : attribut rowspan ou colspan à <td>
+
+## images (jpeg, png ou gif)
+
+balise orpheline <img /> deux attributs obligatoires
+src : chemin absolu ou relatif
+alt : une description breve
+obligatoirement placée dans un paragraphe
+infobulle : attribut 'title' de la balise
+miniature cliquable : <a href="chemin"><img src="" alt="" title="" /></a>
+
+faire une figure : <figure> images et balises </figure>
+	l'image n'est pas forcée d'être en paragraphe si elle est dans une figure
+	à utiliser si l'image est informative et pas seulement illustrative
+légende : <figcaption>la legende de l'image</figcaption>
+
+## formulaires
+
+
+
+# CSS : apparence
+
+## texte
+
+taille : font-size: nbre; (nbre = em, %, px, ex)
+police : font-family: police1, police2 ; avec serif ou sans-serif, police std a la fin
+italique : font-style: italic, oblique ou normal;
+gras : font-weight: bold ou normal;
+decorations : text-decoration: underline, line-through, ouverline, none;
+alignement : text-align: left, center, right, justify; (modif que des balises blocs / pas inline)
+image flottante : float: left, right; (entourée de texte)
+stopper un flottant : clear: left, right, both;
+
+## couleuret fond
+
+couleur : nom (blue), hexadecimal (#RRGGBB), rgb (255-0-134) voir colorpicker.com
+couleur fond : background-color: couleur;
+image fond : backgroun-image: url("nom_image") prop1  prop2, url("nom_image2) prop3 prop4;
+transparence : opacity: valeur entre 0 et 1; ou notation rgba;
+
+## dynamisme
+
+au survol : balise:hover
+au clic : balise:active
+element selectionne : balise:focus
+lien consulte : balise:visited
+
+## bordures et ombres
+
+bordures : border: largeur (px) couleur, type-bordure;
+bordure-top, bottom, left, right: ....; pour appliquer sur un côté uniquement
+arrondies : border-radius: nbre (px); (ou quatre nbre pour specifier chaque coin)
+ombres : box-shadow: .. ; text-shadow: ... ;
+
+
+## blocs (div, p, h1, ...)
+
+dimensions : width ou height: nbre (px ou %); min-width , ... existent
+marges : 
+	intérieure : padding: nbre (px); padding-top, left, bottom, right existent
+	extérieure : margin: nbre (px) ou auto; (pour centrer, si 'width' renseigné)
+txt trop long : overflow: visible, hidden, scroll, auto;
+txt trop large : word-wrap: break-word;
