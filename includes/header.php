@@ -1,21 +1,27 @@
 <header>
+		<h1>En-tête de page</h1>
 	<?php
-	if(session_status() != PHP_SESSION_ACTIVE)
+	if($_SESSION['type'] == 'invite')
 	{ // aucun employe connecté, session "invité"
-	?>
-	<h2>Titre du site</h2>
-			
-		<div  id="connexion">
-			<form  action="connexion.php" method="post">
-				<input type="text" name="Code employe" />
-				<input type="submit" value="Connexion" />
-			</form>
-		</div>
+	?>	
+	<aside  class="connexion">
+		<form  action="connexion.php" method="post">
+			<input type="text" name="code" />
+			<input type="submit" value="Connexion" />
+		</form>
+	</aside>
 	<?php
 	}
 	else
 	{
-		// Nom employé ou responsable, type connexion, Deconnexion
+		//faire une fct pour retrouver le nom a partir de l'id et la table employe
+		//echo 'employe : ' . $_SESSION['id'];
+		//echo 'droits : ' . $_SESSION['type'];
+	?>
+	<aside  class="connexion">
+		<a href="deconnexion.php">Deconnexion</a>
+	</aside>
+	<?php
 	}
 	?>
 </header>
