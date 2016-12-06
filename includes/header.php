@@ -1,8 +1,7 @@
 <header>
 		<h1>En-tête de page</h1>
 	<?php
-	if($_SESSION['type'] == 'invite')
-	{ // aucun employe connecté, session "invité"
+	if($_SESSION['type'] == 'invite') { // aucun employe connecté, session "invité"
 	?>	
 	<aside  class="connexion">
 		<form  action="connexion.php" method="post">
@@ -12,12 +11,12 @@
 	</aside>
 	<?php
 	}
-	else
-	{
-		//faire une fct pour retrouver le nom a partir de l'id et la table employe
-		//echo 'employe : ' . $_SESSION['id'];
-		//echo 'droits : ' . $_SESSION['type'];
+	else { // employe connecte, session employe/responsable
 	?>
+	<div id="accueil">
+		<?php echo 'Bienvenue ' . $_SESSION['prenom'] . ' ' . $_SESSION['nom'];?>
+	</div>
+	
 	<aside  class="connexion">
 		<a href="deconnexion.php">Deconnexion</a>
 	</aside>
