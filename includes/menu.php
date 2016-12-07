@@ -3,7 +3,7 @@
         <h1>Menu</h1>
         <ul>
 			<!-- affiché dans tous les cas -->
-			<li><a href="accueil.php">Aller à l'accueil</a></li>
+			<li><a href="index.php">Aller à l'accueil</a></li>
 			<li><a href="recherche.php">Rechercher des articles</a></li>
             <li><a href="boutiques.php">Contacter une boutique</a></li>
             <?php

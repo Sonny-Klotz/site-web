@@ -3,7 +3,7 @@
 	<head>
 		<title>Connexion</title>
 		<!-- redirection automatique -->
-		<meta charset="utf-8" http-equiv="refresh" content="1;accueil.php"/>
+		<meta charset="utf-8" http-equiv="refresh" content="1;index.php"/>
 	</head>
 	<body>
 <?php
