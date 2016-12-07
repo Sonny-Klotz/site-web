@@ -10,21 +10,25 @@
     
     <body>
 		<?php
+		$bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
 		include("includes/menu.php");
 		include("includes/header.php");
 		include("includes/footer.php");
 		?>
 		
 			<h1>Recherche d'articles</h1>
-		<!-- formulaire de recherche pour un modele (boutique et prix optionnel)-->
+			
 		<form  action="articles.php" method="post">
 			<fieldset>
 				<legend>Modèles existants</legend>
-<!--Generer un item pour chaque boutique et chaque modele en fonction d'une requete-->
-<!--
-				<input type="checkbox" name="nomModele" />
-				<label for="nomModele">Nom modele</label>
--->
+				<?php
+				$articles = $bdd->query('SELECT DISTINCT modele FROM Stock');
+				while ($article = $articles->fetch()) {
+					echo '<input type="checkbox" name=' . '"' . $article['modele'] . '"' . '/>';
+					echo '<label for=' . '"' . $article['modele'] . '"' . '>' . $article['modele'] . '</label>';
+				}
+				$articles->closeCursor();
+				?>
 			</fieldset>
 			<input type="submit" value="Rechercher" />
 		</form>

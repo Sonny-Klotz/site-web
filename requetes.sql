@@ -69,18 +69,20 @@ GROUP BY refBoutique
 
 CREATE VIEW TotalVente (refBoutique, modele, total)
 AS (
-SELECT refBoutique, modele, COUNT(*)
+(SELECT refBoutique, modele, COUNT(*)
 FROM Article
-GROUP BY refBoutique
+WHERE dateVente IS NOT NULL
+GROUP BY refBoutique)
 UNION
-SELECT refBoutique, modele, 0
+(SELECT refBoutique, modele, 0
 FROM Article
 WHERE NOT EXISTS (
 	SELECT *
 	FROM Article
-	dateVente IS NOT NULL
+	WHERE dateVente IS NOT NULL
 	)
 GROUP BY refBoutique
+)
 );
 
 CREATE VIEW Stock (refBoutique, modele, total)
@@ -120,4 +122,13 @@ WHERE E.IDEmploye = B.IDResponsable;
 /* Lister les employés d'une boutique*/
 SELECT nom, prenom, IDEmploye
 FROM Employe
-WHERE refBoutique LIKE nomBoutique; /* on recupere la boutique du responsable dans la session*/
+WHERE refBoutique LIKE nomBoutique /* on recupere la boutique du responsable dans la session*/
+AND IDEmploye NOT IN /* sauf le responsable qu'on ne peut pas licencier */
+(SELECT IDResponsable
+FROM Boutique);
+
+/* Formulaires recrutement et licenciement*/
+DELETE FROM Employe WHERE IDEmploye LIKE nomEmploye; /* POST */
+INSERT INTO Employe VALUES (mail, nom, prenom, salaire /* POST */, boutique /* celle du responsable */);
+
+/* Formulaires de commande et de vente */

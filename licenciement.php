@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Vente</title>
+		<title>Licenciement</title>
 		<!-- redirection automatique -->
-		<meta charset="utf-8" http-equiv="refresh" content="2;stock.php"/>
+		<meta charset="utf-8" http-equiv="refresh" content="2;rh.php"/>
 	</head>
 	<body>
 <?php
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
-$bdd->exec('UPDATE Article SET dateVente="' . $_POST['date'] . '" WHERE modele = "' . $_POST['modele'] . '" AND modele IN (SELECT * FROM Article GROUP BY modele)');
-
+$bdd->exec('DELETE FROM Employe WHERE IDEmploye LIKE "'. $_POST['code'] . '"');
 echo 'Licenciement effectué, redirection ...';
 ?>
 	</body>

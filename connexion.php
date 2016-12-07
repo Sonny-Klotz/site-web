@@ -3,7 +3,7 @@
 	<head>
 		<title>Connexion</title>
 		<!-- redirection automatique -->
-		<meta charset="utf-8" http-equiv="refresh" content="1;index.php"/>
+		<meta charset="utf-8" http-equiv="refresh" content="2;index.php"/>
 	</head>
 	<body>
 <?php
@@ -17,6 +17,7 @@ $code = $_POST['code'];
 while ($responsable = $responsables->fetch()) {
 	if(strcmp($responsable['IDResponsable'], $code) == 0) {
 		$_SESSION['type'] = 'responsable';
+		$_SESSION['code'] = $responsable['IDResponsable'];
 		$_SESSION['nom'] = $responsable['nom'];
 		$_SESSION['prenom'] = $responsable['prenom'];
 		$_SESSION['boutique'] = $responsable['IDBoutique'];
@@ -29,6 +30,7 @@ if(strcmp($_SESSION['type'],'responsable') != 0) {
 	while ($employe = $employes->fetch()) {
 		if(strcmp($employe['IDEmploye'], $code) == 0) {
 			$_SESSION['type'] = 'employe';
+			$_SESSION['code'] = $employe['IDEmploye'];
 			$_SESSION['nom'] = $employe['nom'];
 			$_SESSION['prenom'] = $employe['prenom'];
 			$_SESSION['boutique'] = $employe['refBoutique'];

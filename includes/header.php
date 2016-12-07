@@ -5,8 +5,9 @@
 	?>	
 	<aside  class="connexion">
 		<form  action="connexion.php" method="post">
+			<label for="code">Code connexion : </label>
 			<input type="text" name="code" />
-			<input type="submit" value="Connexion" />
+			<input type="submit" value="Se connecter" />
 		</form>
 	</aside>
 	<?php
@@ -14,7 +15,9 @@
 	else { // employe connecte, session employe/responsable
 	?>
 	<div id="accueil">
-		<?php echo 'Bienvenue ' . $_SESSION['prenom'] . ' ' . $_SESSION['nom'];?>
+		<?php
+		echo 'Bienvenue ' . $_SESSION['prenom'] . ' ' . $_SESSION['nom'] .'<br />';
+		echo 'Vous travaillez à la boutique ' . $_SESSION['boutique'];?>
 	</div>
 	
 	<aside  class="connexion">

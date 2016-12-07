@@ -19,7 +19,7 @@
             <ul>
                 <li><a href="#employes">Employés</a></li>
                 <li><a href="#licensiement">Embauche</a></li>
-                <li><a href="#embauche">Licensiement</a></li>
+                <li><a href="#embauche">Licenciement</a></li>
             </ul>
         </nav>
 
@@ -30,7 +30,10 @@
 		$employes = $bdd->query('SELECT nom, prenom, IDEmploye FROM Employe WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
 		while ($employe = $employes->fetch()) {
 			echo $employe['prenom'] . ' ' . $employe['nom']; ?> -
-			<?php echo $employe['IDEmploye']; ?> <br />
+			<?php echo $employe['IDEmploye'];
+			if($employe['IDEmploye'] == $_SESSION['code'])
+				echo ' - <em>Responsable</em>';
+			?> <br />
 		<?php
 		}
 		$employes->closeCursor();
@@ -38,17 +41,17 @@
 		</p>
 		
 <!--licensiement d'employés -->
-		<section id="licensiement">
-			<form action="licensiement.php" method="post">
+		<section id="licenciement">
+			<form action="licenciement.php" method="post">
 				<select name="code">
 				<?php
-				$employes = $bdd->query('SELECT nom, prenom, IDEmploye FROM Employe WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
+				$employes = $bdd->query('SELECT nom, prenom, IDEmploye FROM Employe WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '" AND IDEmploye NOT IN (SELECT IDResponsable FROM Boutique)');
 				while ($employe = $employes->fetch()) {
 					echo '<option value=' . '"' . $employe['IDEmploye'] . '"' . '>' . $employe['IDEmploye'] . '</option>';
 				}
 				$employes->closeCursor();
 				?>
-				<input type="submit" value="Licensier" />
+				<input type="submit" value="Licencier" />
 				</select>
 			</form>
 		</section>
@@ -56,10 +59,14 @@
 <!--recrutement d'employés -->
 		<section id="embauche">
 			<form action="embauche.php" method="post">
-				<input type="text" name="nom" />
-				<input type="text" name="prenom" />
-				<input type="text" name="mail" />
-				<input type="number" name="salaire" min=0 max=8388607/>
+				<label for="nom">Nom : </label>
+				<input type="text" name="nom" /><br />
+				<label for="prenom">Prenom : </label>
+				<input type="text" name="prenom" /><br />
+				<label for="mail">Mail : </label>
+				<input type="text" name="mail" /><br />
+				<label for="salaire">Salaire : </label>
+				<input type="number" name="salaire" min=0 max=8388607/><br />
 				<input type="submit" value="Embaucher" />
 			</form>
 		</section>

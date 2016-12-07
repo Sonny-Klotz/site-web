@@ -20,33 +20,35 @@
 		<nav class ="ancres">
             <ul>
                 <li><a href="#articles">Stock</a></li>
+                <li><a href="#vene">Vente</a></li>
                 <li><a href="#commande">Commande</a></li>
-                <li><a href="#vente">Vente</a></li>
             </ul>
         </nav>
         
 <!-- liste du stock de la boutique -->
 		<p>
-			<strong>Employes</strong> : <br />
+			<strong>Articles</strong> : <br />
 		<?php
 		$articles = $bdd->query('SELECT * FROM Stock WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
 		while ($article = $articles->fetch()) {
 			echo $article['modele']?> -
-			<?php echo $article['quantite']; ?> <br />
+			<?php echo $article['total']; ?> <br />
 		<?php
 		}
 		$articles->closeCursor();
 		?>
 		</p>
 		
-<!--licensiement d'employés -->
+<!--vente d'articles -->
 		<section id="vente">
 			<form action="vente.php" method="post">
+				<label for="date">Date : </label>
+				<input type="date" name="date" /><br />
 				<select name="code">
 				<?php
 				$articles = $bdd->query('SELECT * FROM Stock WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
-				while ($employe = $employes->fetch()) {
-					echo '<option value=' . '"' . $article['modele'] . '"' . '>' . $modele['modele'] . '</option>';
+				while ($article = $articles->fetch()) {
+					echo '<option value=' . '"' . $article['modele'] . '"' . '>' . $article['modele'] . '</option>';
 				}
 				$articles->closeCursor();
 				?>
@@ -55,22 +57,25 @@
 			</form>
 		</section>
 
-<!--recrutement d'employés -->
+<!--commande d'articles -->
 		<section id="commande">
 			<form action="commande.php" method="post">
-				<select name="code">
+				<label for="modele">Modele : </label>
+				<select name="modele"> 
 				<?php
-				$articles = $bdd->query('SELECT * FROM Stock WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
-				while ($employe = $employes->fetch()) {
-					echo '<option value=' . '"' . $article['modele'] . '"' . '>' . $modele['modele'] . '</option>';
+				$articles = $bdd->query('SELECT * FROM Fournisseur');
+				while ($article = $articles->fetch()) {
+					// La variable POST va contenir deux données séparées par un '&'.
+					echo '<option value=' . '"' . $article['modele'] . '&' . $article['prixFournisseur'] . '"' . '>' . $article['modele'] . ' - ' . $article['prixFournisseur'] . '€</option>';
 				}
 				$articles->closeCursor();
 				?>
-				<input type="submit" value="Vendre" />
-				</select>>
-				<input type="number" name="quantite" min=0 max=8388607/>
-				<input type="date" name="date" />
-				<input type="submit" value="Embaucher" />
+				</select><br />
+				<label for="quantite">Quantite : </label>
+				<input type="number" name="quantite" min=0 max=8388607><br />
+				<label for="date">Date : </label>
+				<input type="date" name="date" /><br />
+				<input type="submit" value="Commander" />
 			</form>
 		</section>
 		
