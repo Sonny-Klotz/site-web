@@ -127,6 +127,11 @@ AND IDEmploye NOT IN /* sauf le responsable qu'on ne peut pas licencier */
 (SELECT IDResponsable
 FROM Boutique);
 
+/* Afficheer le stock d'une boutique */
+SELECT *
+FROM Stock
+WHERE refBoutique LIKE /* *boutique de l'employe */
+
 /* Formulaires recrutement et licenciement*/
 DELETE FROM Employe WHERE IDEmploye LIKE /* POST */;
 INSERT INTO Employe VALUES ( /* POST */, /* boutique du responsable */);

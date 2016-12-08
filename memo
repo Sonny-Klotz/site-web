@@ -1,8 +1,7 @@
-finir affichage recherche d'articles
 faire grant et utilisateurs / roles
 verif l'org des balises pour le css
 faire un css
 verif les formulaires pour indiquer si la commande est effectivement traitée ou non
-	tous le sparamètres sont requis a chaque fois
+	tous les paramètres sont requis a chaque fois
 verif le code, ajouter toutes les requetes au .sql
 faire un schema E/A, ajouter plein d'elements dans la base

@@ -1,4 +1,21 @@
-<?php session_start(); ?>
+<?php
+session_start();
+
+function condition($bdd) {
+	$modeles = $bdd->query('SELECT modele FROM Fournisseur');
+	$res = "";
+	
+	while ($modele = $modeles->fetch()) {
+		// si la case du modele existant a été cochée, on l'ajoute a la condition
+		if (isset($_POST[$modele['modele']])) {
+			$res .= ' modele = "' . $modele['modele'] . '" OR';
+		}
+	}
+	
+	//on retire le dernier OR, les deux derniers caractères
+	return substr($res, 0, strlen($res) - 3);
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -15,12 +32,39 @@
 		include("includes/footer.php");
 		?>
 		
-		<!-- Resultat requete en fonction formulaire de recherche et requete-->
-<!--
-		Le formulaire (checkbox doit changer le WHERE de la requete :
-		modele = nom1 OR modele = nom2 etc  ... passer par une fonction renvoyant une chaine
-		la concaténer avec la requete
-		Afficher le retour de la requete
--->
+		<h1>Résultats de la recherche</h1>
+		
+		<?php
+		$bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
+		$modeles = $bdd->query('SELECT modele FROM Stock WHERE' . condition($bdd));
+		?>
+		<table>
+				<caption>Produits disponibles</caption>
+			<tbody>
+		<?php
+		while ($modele = $modeles->fetch())
+		{
+		?>
+			<tr>
+				<!--ajouter une image de titre le nom du modele -->
+				<td><?php echo $modele['modele']; ?></td>
+				<td>
+			<?php
+			$boutiques = $bdd->query('SELECT refBoutique FROM Stock WHERE modele = "' . $modele['modele'] . '"');
+			while ($boutique = $boutiques->fetch())
+			{
+				echo $boutique['refBoutique'] . '';
+			?>
+				</td>
+			</tr>
+		<?php
+			}
+			$boutiques->closeCursor();
+		}
+		$modeles->closeCursor();
+		?>
+			</tbody>
+		</table>
+		
     </body>
 </html>

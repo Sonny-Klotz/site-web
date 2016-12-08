@@ -22,7 +22,7 @@
 			<fieldset>
 				<legend>Modèles existants</legend>
 				<?php
-				$articles = $bdd->query('SELECT DISTINCT modele FROM Stock');
+				$articles = $bdd->query('SELECT modele FROM Fournisseur');
 				while ($article = $articles->fetch()) {
 					echo '<input type="checkbox" name=' . '"' . $article['modele'] . '"' . '/>';
 					echo '<label for=' . '"' . $article['modele'] . '"' . '>' . $article['modele'] . '</label>';
