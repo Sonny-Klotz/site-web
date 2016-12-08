@@ -30,7 +30,7 @@
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
 //On ajoute la commande
-$bdd->exec('INSERT INTO Commander (refBoutique, modele, dateCommande, quantite) VALUES ("'  . $_SESSION['boutique'] . '", "' . nom($_POST['modele']) . '", "' .  $_POST['date'] . '", ' . $_POST['quantite'] . ' )');
+$bdd->exec('INSERT INTO Commander (refBoutique, modele, dateCommande, quantite) VALUES ("'  . $_SESSION['boutique'] . '", "' . nom($_POST['modele']) . '", "' .  $_POST['dateCommande'] . '", ' . $_POST['quantite'] . ' )');
 
 //On ajoute les articles dans la boutique
 $i = 0;

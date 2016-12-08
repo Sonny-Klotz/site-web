@@ -42,9 +42,10 @@
 <!--vente d'articles -->
 		<section id="vente">
 			<form action="vente.php" method="post">
-				<label for="date">Date : </label>
-				<input type="date" name="date" /><br />
-				<select name="code">
+				<label for="dateVente">Date : </label>
+				<input type="date" name="dateVente" /><br />
+				<label for="modele">Modele : </label>
+				<select name="modele">
 				<?php
 				$articles = $bdd->query('SELECT * FROM Stock WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
 				while ($article = $articles->fetch()) {
@@ -73,8 +74,8 @@
 				</select><br />
 				<label for="quantite">Quantite : </label>
 				<input type="number" name="quantite" min=0 max=8388607><br />
-				<label for="date">Date : </label>
-				<input type="date" name="date" /><br />
+				<label for="dateCommande">Date : </label>
+				<input type="date" name="dateCommande" /><br />
 				<input type="submit" value="Commander" />
 			</form>
 		</section>

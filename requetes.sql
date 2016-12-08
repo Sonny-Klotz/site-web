@@ -128,7 +128,17 @@ AND IDEmploye NOT IN /* sauf le responsable qu'on ne peut pas licencier */
 FROM Boutique);
 
 /* Formulaires recrutement et licenciement*/
-DELETE FROM Employe WHERE IDEmploye LIKE nomEmploye; /* POST */
-INSERT INTO Employe VALUES (mail, nom, prenom, salaire /* POST */, boutique /* celle du responsable */);
-
+DELETE FROM Employe WHERE IDEmploye LIKE /* POST */;
+INSERT INTO Employe VALUES ( /* POST */, /* boutique du responsable */);
 /* Formulaires de commande et de vente */
+INSERT INTO Commander (refBoutique, modele, dateCommande, quantite) VALUES ( /* boutique de l'employe */ , /* POST */);
+INSERT INTO Article (modele, prixVente, dateVente, refBoutique) VALUES( /* POST */ , NULL, /* boutique de l'meploye */);
+UPDATE Article
+SET dateVente="2016-12-08"
+WHERE IDArticle IN(
+    SELECT MIN(IDArticle)
+    FROM (SELECT * FROM Article) A
+    WHERE A.modele="prototype"
+    AND A.refBoutique="versailles"
+    AND dateVente IS NULL
+)

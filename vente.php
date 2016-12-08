@@ -9,9 +9,9 @@
 <?php
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
-$bdd->exec('UPDATE Article SET dateVente="' . $_POST['date'] . '" WHERE modele = "' . $_POST['modele'] . '" AND modele IN (SELECT * FROM Article GROUP BY modele)');
+$bdd->exec('UPDATE Article SET dateVente="' . $_POST['dateVente'] . '" WHERE IDArticle IN( SELECT MIN(IDArticle) FROM (SELECT * FROM Article) A WHERE A.modele="' . $_POST['modele'] . '" AND A.refBoutique="' . $_SESSION['boutique'] . '" AND dateVente IS NULL)');
 
-echo 'Licenciement effectué, redirection ...';
+echo 'Vente effectuée, redirection ...';
 ?>
 	</body>
 </html>
