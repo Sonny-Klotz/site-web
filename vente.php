@@ -7,10 +7,8 @@
 	</head>
 	<body>
 <?php
-session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
-$bdd->exec('UPDATE Article SET dateVente="' . $_POST['dateVente'] . '" WHERE IDArticle IN( SELECT MIN(IDArticle) FROM (SELECT * FROM Article) A WHERE A.modele="' . $_POST['modele'] . '" AND A.refBoutique="' . $_SESSION['boutique'] . '" AND dateVente IS NULL)');
-
+include("includes/session.php");
+$bdd->exec('UPDATE Article SET estVendu=1 WHERE IDArticle IN( SELECT MIN(IDArticle) FROM (SELECT * FROM Article) A WHERE A.modele="' . $_POST['modele'] . '" AND A.refBoutique="' . $_SESSION['boutique'] . '" AND estVendu=0)');
 echo 'Vente effectuée, redirection ...';
 ?>
 	</body>

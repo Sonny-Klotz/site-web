@@ -1,7 +1,9 @@
-faire grant et utilisateurs / roles
-verif l'org des balises pour le css
-faire un css
 verif les formulaires pour indiquer si la commande est effectivement traitée ou non
-	tous les paramètres sont requis a chaque fois
-verif le code, ajouter toutes les requetes au .sql
-faire un schema E/A, ajouter plein d'elements dans la base
+	tous les paramètres sont requis a chaque fois, sinon on fait pas la requete, msg erreur
+	vérif les failles insertion de script
+	verif qu'on insere pas deux fois une cle primaire
+	on peut vendre uniquement si stock > 0
+	un identifiant d'employé ne doit pas dépasser 16 caractères, et ne doit pas déjà être utilisé dans la bd
+	compléter cette liste
+faire un css
+faire un schema E/A

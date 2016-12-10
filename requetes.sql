@@ -1,9 +1,10 @@
 /*
 Liste de requêtes pour la base de données et le site web.
 ligne 9 : création de la base de données
-ligne 59 : vues
-ligne : ajout de valeurs dans la table
-ligne : requêtes utilisées dans le site
+ligne 65 : vues
+ligne 88: ajout de valeurs dans la table
+ligne 126: création des utilisateurs avec droits d'acces
+ligne 158: requêtes utilisées dans le site
 */
 
 /* Commandes sql pour créer la base de données */
@@ -14,11 +15,12 @@ PRIMARY KEY (modele)
 );
 
 CREATE TABLE Employe (
-IDEmploye varchar(50),
+IDEmploye varchar(16),
 nom varchar(30),
 prenom varchar(30),
 salaire int(3),
 refBoutique varchar(30),
+mdp varchar(30),
 PRIMARY KEY (IDEmploye)
 /* FOREIGN KEY (refBoutique) REFERENCES Boutique (IDBoutique) // référencement croisé */
 );
@@ -36,13 +38,14 @@ CREATE TABLE Article (
 IDArticle int(4),
 modele varchar(30),
 prixVente int(4),
-dateVente date,
+estVendu int(1),
 refBoutique varchar(30),
 PRIMARY KEY (IDArticle),
 FOREIGN KEY (modele) REFERENCES Fournisseur (modele),
 FOREIGN KEY (refBoutique) REFERENCES Boutique (IDBoutique)
 );
 ALTER TABLE  `Article` CHANGE  `IDArticle`  `IDArticle` INT( 4 ) NOT NULL AUTO_INCREMENT ;
+ALTER TABLE  `Article` CHANGE  `estVendu`  `estVendu` INT( 1 ) NULL DEFAULT  '0';
 
 CREATE TABLE Commander (
 IDCommande int(3),
@@ -60,90 +63,132 @@ ALTER TABLE  `Commander` CHANGE  `IDCommande`  `IDCommande` INT( 3 ) NOT NULL AU
 ALTER TABLE Employe ADD FOREIGN KEY (refBoutique) REFERENCES Boutique (IDBoutique);
 
 /* Vues */
-CREATE VIEW TotalCommande (refBoutique, modele, total)
-AS (
-SELECT refBoutique, modele, SUM(quantite)
-FROM Commander
-GROUP BY refBoutique
-);
-
-CREATE VIEW TotalVente (refBoutique, modele, total)
-AS (
-(SELECT refBoutique, modele, COUNT(*)
-FROM Article
-WHERE dateVente IS NOT NULL
-GROUP BY refBoutique)
-UNION
-(SELECT refBoutique, modele, 0
-FROM Article
-WHERE NOT EXISTS (
-	SELECT *
-	FROM Article
-	WHERE dateVente IS NOT NULL
-	)
-GROUP BY refBoutique
-)
-);
-
 CREATE VIEW Stock (refBoutique, modele, total)
 AS (
-SELECT T1.refBoutique, T1.modele, T1.total - T2.total
-FROM TotalCommande T1, TotalVente T2
-WHERE T1.refBoutique = T2.refBoutique
+SELECT refBoutique, modele, count(*) - sum(estVendu)
+FROM Article
+GROUP BY refBoutique, modele
 );
+
+CREATE VIEW compta1 (refBoutique, salaires) AS
+SELECT refBoutique, sum(salaire)
+FROM Employe GROUP BY refBoutique;
+
+CREATE VIEW compta2 (refBoutique, commandes) AS
+SELECT CrefBoutique, sum(C.quantite * F.prixFournisseur)
+FROM Commander C, Fournisseur F
+WHERE C.modele = F.modele
+GROUP BY refBoutique;
+
+CREATE VIEW compta3 (refBoutique, ventes) AS
+SELECT refBoutique, sum(prixVente)
+FROM Article WHERE estVendu = 1
+GROUP BY refBoutique;
 
 /* Ajout de valeurs 
 Si ajout d'une boutique avec un responsable, faire attention au référencement croisé
 AUTO INCREMENT, mettre le nom des colonnes a modif devant la table
 */
 
-INSERT INTO Boutique VALUES ("versailles", NULL, "0102030405", "45 avenue des etats-unis 78000 VERSAILLES");
-INSERT INTO Employe VALUES ("sonny.klotz@ens.uvsq.fr", "Klotz", "Sonny", 3000, "versailles");
-UPDATE Boutique SET IDResponsable="sonny.klotz@ens.uvsq.fr" WHERE IDBoutique LIKE "versailles";
-INSERT INTO Employe VALUES ("leonhard.euler@hotmail.com", "Euler", "Leonhard", 2300, "versailles");
-INSERT INTO Fournisseur VALUES ("prototype", 100);
-INSERT INTO Commander (refBoutique, modele, dateCommande, quantite) VALUES ("versailles", "prototype", '2016-12-07', 2);
-INSERT INTO Article (modele, prixVente, dateVente, refBoutique) VALUES("prototype", 300, NULL, "versailles");
-INSERT INTO Article (modele, prixVente, dateVente, refBoutique) VALUES("prototype", 300, '2016-12-07', "versailles");
+INSERT INTO Boutique VALUES
+	("Versailles", NULL, "0139257800", "45 avenue des etats-unis, 78000 VERSAILLES"),
+	("La Défense", NULL, "0141023030", "Les Quatre Temps - Le Parvis de la Défense, 92800 PUTEAUX"),
+	("Le Club", NULL, "0141023030", "8 rue Charles Michels SAINT DENIS"),
+	("De poche en poche", NULL, "0148133540", "2 Rue Catulienne, 93200 Saint-Denis");
+INSERT INTO Employe VALUES
+	("sonny.klotz", "Klotz", "Sonny", 7000, "Versailles", "mdp"),
+	("malek.zemni", "Zemni", "Malek", 8388607, "De poche en poche", "mdp"),
+	("younes.ben-yamna", "Ben Yamna", "Younes", 4500, "Le Club", "mdp"),
+	("andy.lequeux", "Lequeux", "Andy", 6700, "La Défense", "mdp");
+UPDATE Boutique SET IDResponsable="sonny.klotz" WHERE IDBoutique LIKE "Versailles";
+UPDATE Boutique SET IDResponsable="malek.zemni" WHERE IDBoutique LIKE "De poche en poche";
+UPDATE Boutique SET IDResponsable="andy.lequeux" WHERE IDBoutique LIKE "La Défense";
+UPDATE Boutique SET IDResponsable="younes.ben-yamna" WHERE IDBoutique LIKE "Le Club";
+
+INSERT INTO Fournisseur VALUES
+	("Le bas de gamme", 50),
+	("Le moyen de gamme", 200),
+	("Le haut de gamme", 500),
+	("Le très haut de gamme", 1000),
+	("Le sobre", 200),
+	("Le sportif", 180),
+	("L'endurant", 300),
+	("Le populaire", 250),
+	("Le stupéfiant", 400),
+	("Le Jamaïcain", 450),
+	("Le planneur", 420),
+	("Le stimulant", 180),
+	("Le blindé", 750),
+	("Le classique", 500),
+	("L'escapolope", 600),
+	("Le steak", 450);
+
+/* Création des utilisateurs et des droits d'accès */
+CREATE USER 'utilisateur'@'localhost' identified by '';
+CREATE USER 'sonny.klotz'@'localhost' identified by 'mdp';
+CREATE USER 'malek.zemni'@'localhost' identified by 'mdp'; 
+CREATE USER 'andy.lequeux'@'localhost' identified by 'mdp';
+CREATE USER 'younes.ben-yamna'@'localhost' identified by 'mdp';
+
+GRANT SELECT
+ON projet.*
+TO /* POST  */
+'utilisateur'@'localhost';
+
+GRANT INSERT
+ON projet.Article
+TO /* POST */
+WITH GRANT OPTION;
+
+GRANT INSERT
+ON projet.Commander
+TO /* POST */
+WITH GRANT OPTION;
+
+GRANT UPDATE
+ON TABLE projet.Article
+TO /* POST */
+WITH GRANT OPTION;
+	
+GRANT ALL ON *.* TO 'sonny.klotz'@'localhost' WITH GRANT OPTION;
+GRANT ALL ON *.* TO	'malek.zemni'@'localhost' WITH GRANT OPTION;
+GRANT ALL ON *.* TO	'andy.lequeux'@'localhost' WITH GRANT OPTION;
+GRANT ALL ON *.* TO	'younes.ben-yamna'@'localhost' WITH GRANT OPTION;
 
 /* Requetes utilisées pour le site web */
-SELECT * FROM Employe;
+/* recherche.php et article.php */
+SELECT modele FROM Fournisseur;
+SELECT modele FROM Stock /* WHERE checkbox sélectionnées */ ;
+SELECT refBoutique FROM Stock WHERE modele = /* modeles trouvés */ ; /* boutiques contenant le modele cherché */
 
-/* Les responsables de chaque boutique */
-SELECT B.IDResponsable, B.IDBoutique, E.nom, E.prenom
-FROM Boutique B, Employe E
-WHERE B.IDResponsable = E.IDEmploye;
-
-/* Infos pour contacter chaque boutique */
+/* boutiques.php : contact des boutiques*/
 SELECT E.nom, E.prenom, E.IDEmploye, B.IDBoutique, B.adresse, B.telephone
 FROM Employe E, Boutique B
 WHERE E.IDEmploye = B.IDResponsable;
 
-/* Lister les employés d'une boutique*/
-SELECT nom, prenom, IDEmploye
-FROM Employe
-WHERE refBoutique LIKE nomBoutique /* on recupere la boutique du responsable dans la session*/
-AND IDEmploye NOT IN /* sauf le responsable qu'on ne peut pas licencier */
-(SELECT IDResponsable
-FROM Boutique);
+SELECT * FROM compta1 c1, compta2 c2, compta3 c3
+WHERE c1.refBoutique = c2.refBoutique
+AND c1.refBoutique = c3.refBoutique;
 
-/* Afficheer le stock d'une boutique */
-SELECT *
-FROM Stock
-WHERE refBoutique LIKE /* *boutique de l'employe */
-
-/* Formulaires recrutement et licenciement*/
-DELETE FROM Employe WHERE IDEmploye LIKE /* POST */;
-INSERT INTO Employe VALUES ( /* POST */, /* boutique du responsable */);
-/* Formulaires de commande et de vente */
-INSERT INTO Commander (refBoutique, modele, dateCommande, quantite) VALUES ( /* boutique de l'employe */ , /* POST */);
-INSERT INTO Article (modele, prixVente, dateVente, refBoutique) VALUES( /* POST */ , NULL, /* boutique de l'meploye */);
-UPDATE Article
-SET dateVente="2016-12-08"
+/* stock.php commande.php vente.php */
+SELECT * FROM Stock WHERE total > 0 AND refBoutique LIKE /* boutique de l'employé */ ;
+SELECT * FROM Fournisseur; /* pour la commande */
+INSERT INTO Commander (refBoutique, modele, dateCommande, quantite) VALUES ( /* POST */ );
+/* On insère autant d'articles qu'on a commander*/
+INSERT INTO Article (modele, prixVente, refBoutique) VALUES (/* POST */);
+UPDATE Article SET estVendu=1
 WHERE IDArticle IN(
-    SELECT MIN(IDArticle)
-    FROM (SELECT * FROM Article) A
-    WHERE A.modele="prototype"
-    AND A.refBoutique="versailles"
-    AND dateVente IS NULL
-)
+SELECT MIN(IDArticle)
+FROM (SELECT * FROM Article) A
+WHERE A.modele= /* POST */
+AND A.refBoutique=/* boutique de l'employe*/
+AND estVendu=0);
+
+/* rh.php embauche.php licenciement.php */
+/* lister le personnel de la boutique */
+SELECT nom, prenom, IDEmploye FROM Employe WHERE refBoutique LIKE /* boutique du responsable */;
+INSERT INTO Employe VALUES (/* POST */);
+CREATE USER /* identifiant */@"localhost" identified by /* mot de passe */;
+/* On lui affecte les droits correspondants aux employés (voir section précédente) */
+DELETE FROM Employe WHERE IDEmploye LIKE /* login */ ;
+DROP USER /* login */;

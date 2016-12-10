@@ -1,3 +1,55 @@
+<?php
+function initSession($type, $login, $mdp, $nom, $prenom, $boutique) {
+	// Variables globales
+	$_SESSION['type'] = $type;
+	$_SESSION['login'] = $login;
+	$_SESSION['mdp'] = $mdp;
+	$_SESSION['nom'] = $nom;
+	$_SESSION['prenom'] = $prenom;
+	$_SESSION['boutique'] = $boutique;
+}
+
+function testEmploye($login, $mdp, $bdd) {
+	$employes = $bdd->query("SELECT * FROM Employe");
+	$trouve = false;
+	while ($employe = $employes->fetch()) {
+		if(strcmp($employe['IDEmploye'], $login) == 0 && strcmp($employe['mdp'], $mdp) != 0) {
+			echo 'Mot de passe invalide, redirection ...';
+			$trouve = true;
+			break;
+		}
+		else if(strcmp($employe['IDEmploye'], $login) == 0 && strcmp($employe['mdp'], $mdp) == 0) {
+			echo 'Connexion réussie, redirection ...';
+			initSession('employe', $login, $mdp, $employe['nom'], $employe['prenom'], $employe['refBoutique']);
+			$trouve = true;
+			break;
+		}
+	}
+	// Si personne n'est trouvé
+	$employes->closeCursor();
+	return $trouve;
+}
+
+function testResponsable($login, $mdp, $bdd) {
+$responsables = $bdd->query("SELECT B.IDResponsable, B.IDBoutique, E.nom, E.prenom, E.mdp FROM Boutique B, Employe E WHERE B.IDResponsable = E.IDEmploye");
+	$trouve = false;
+	while ($responsable = $responsables->fetch()) {
+		if(strcmp($responsable['IDResponsable'], $login) == 0 && strcmp($responsable['mdp'], $mdp) != 0) {
+			echo 'Mot de passe invalide, redirection ...';
+			$trouve = true;
+		}
+		else if(strcmp($responsable['IDResponsable'], $login) == 0 && strcmp($responsable['mdp'], $mdp) == 0) {
+			echo 'Connexion réussie, redirection ...';
+			initSession('responsable', $login, $mdp, $responsable['nom'], $responsable['prenom'], $responsable['IDBoutique']);
+			$responsables->closeCursor();
+			$trouve = true;
+		}
+	}
+	$responsables->closeCursor();
+	return $trouve;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,45 +59,15 @@
 	</head>
 	<body>
 <?php
-session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
-$employes = $bdd->query("SELECT * FROM Employe");
-$responsables = $bdd->query("SELECT B.IDResponsable, B.IDBoutique, E.nom, E.prenom FROM Boutique B, Employe E WHERE B.IDResponsable = E.IDEmploye");
-$code = $_POST['code'];
+include("includes/session.php");
+$login = $_POST['login'];
+$mdp = $_POST['mdp'];
 
-// On test d'abord si c'est un responsable
-while ($responsable = $responsables->fetch()) {
-	if(strcmp($responsable['IDResponsable'], $code) == 0) {
-		$_SESSION['type'] = 'responsable';
-		$_SESSION['code'] = $responsable['IDResponsable'];
-		$_SESSION['nom'] = $responsable['nom'];
-		$_SESSION['prenom'] = $responsable['prenom'];
-		$_SESSION['boutique'] = $responsable['IDBoutique'];
-		echo 'Connexion réussie, redirection ...';
+if (!testResponsable($login, $mdp, $bdd)) {
+	if(!testEmploye($login, $mdp, $bdd)) {
+		echo "L'identifiant n'existe pas, redirection ...";
 	}
 }
-
-// Sinon il peut etre un employe simple
-if(strcmp($_SESSION['type'],'responsable') != 0) {
-	while ($employe = $employes->fetch()) {
-		if(strcmp($employe['IDEmploye'], $code) == 0) {
-			$_SESSION['type'] = 'employe';
-			$_SESSION['code'] = $employe['IDEmploye'];
-			$_SESSION['nom'] = $employe['nom'];
-			$_SESSION['prenom'] = $employe['prenom'];
-			$_SESSION['boutique'] = $employe['refBoutique'];
-			echo 'Connexion réussie, redirection ...';
-		}
-	}
-}
-
-//si code non existant, il rest un invite
-if(strcmp($_SESSION['type'],'invite') == 0) {
-	echo 'Employe non existant, redirection ...';
-}
-	
-$employes->closeCursor();
-$responsables->closeCursor();
 ?>
 	</body>
 </html>

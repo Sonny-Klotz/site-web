@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +8,7 @@
     
     <body>
 		<?php
-		$bdd = new PDO('mysql:host=localhost;dbname=site-web;charset=utf8', 'root', 'user');
+		include("includes/session.php");
 		include("includes/menu.php");
 		include("includes/header.php");
 		include("includes/footer.php");
@@ -24,8 +22,8 @@
 				<?php
 				$articles = $bdd->query('SELECT modele FROM Fournisseur');
 				while ($article = $articles->fetch()) {
-					echo '<input type="checkbox" name=' . '"' . $article['modele'] . '"' . '/>';
-					echo '<label for=' . '"' . $article['modele'] . '"' . '>' . $article['modele'] . '</label>';
+					echo '<input type="checkbox" name="' . str_replace(' ', '', $article['modele']) . '"/>';
+					echo '<label for="' . str_replace(' ', '', $article['modele']) . '">' . $article['modele'] . '</label><br />';
 				}
 				$articles->closeCursor();
 				?>
