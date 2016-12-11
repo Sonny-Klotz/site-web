@@ -16,19 +16,22 @@
 		<div class="contenu">
 			<h1>Recherche d'articles</h1>
 			
-		<form  action="articles.php" method="post">
+		<form  action="articles.php" method="post" id="recherche">
 			<fieldset>
 				<legend>Modèles existants</legend>
+					<ul>
 				<?php
 				$articles = $bdd->query('SELECT modele FROM Fournisseur');
 				while ($article = $articles->fetch()) {
-					echo '<input type="checkbox" name="' . str_replace(' ', '', $article['modele']) . '"/>';
-					echo '<label for="' . str_replace(' ', '', $article['modele']) . '">' . $article['modele'] . '</label><br />';
+					echo '<li><input type="checkbox" name="' . str_replace(' ', '', $article['modele']) . '"/>';
+					echo '<label for="' . str_replace(' ', '', $article['modele']) . '">' . $article['modele'] . '</label></li>';
 				}
 				$articles->closeCursor();
 				?>
+					</ul>
+				<br />
+				<input type="submit" value="Rechercher" />
 			</fieldset>
-			<input type="submit" value="Rechercher" />
 		</form>
 		</div>
 		<?php include("includes/footer.php");?>

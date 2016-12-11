@@ -91,9 +91,9 @@ AUTO INCREMENT, mettre le nom des colonnes a modif devant la table
 */
 
 INSERT INTO Boutique VALUES
-	("Versailles", NULL, "0139257800", "45 avenue des etats-unis, 78000 VERSAILLES"),
-	("La Défense", NULL, "0141023030", "Les Quatre Temps - Le Parvis de la Défense, 92800 PUTEAUX"),
-	("Le Club", NULL, "0141023030", "8 rue Charles Michels SAINT DENIS"),
+	("Versailles", NULL, "0139257800", "45 avenue des etats-unis, 78000 Versailles"),
+	("La Défense", NULL, "0141023030", "Les Quatre Temps - Le Parvis de la Défense, 92800 Puteaux"),
+	("Le Club", NULL, "0141023030", "8 rue Charles Michels, 93200 Saint-Denis"),
 	("De poche en poche", NULL, "0148133540", "2 Rue Catulienne, 93200 Saint-Denis");
 INSERT INTO Employe VALUES
 	("sonny.klotz", "Klotz", "Sonny", 7000, "Versailles", "mdp"),

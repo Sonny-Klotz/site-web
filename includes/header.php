@@ -3,10 +3,10 @@
 	<?php
 	if(strcmp($_SESSION['type'],'invite') == 0) {
 	?>
-		<div class="infos">Faites une recherche, contactez une boutique ou connectez-vous.</div>
+		<div class="infos">Mode invité : Faites une recherche ou connectez-vous.</div>
 	<?php
 	}
 	else {
-		echo '<div class="infos">Vous travaillez à la boutique ' . $_SESSION['boutique'] . '</div>';
+		echo '<div class="infos">Mode ' . $_SESSION['type'] . ' : Vous travaillez à la boutique ' . $_SESSION['boutique'] . '</div>';
 	} ?>
 </header>

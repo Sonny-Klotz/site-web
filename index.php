@@ -21,12 +21,11 @@
 		{
 		?>
 		<p>
-			<strong>Boutique</strong> : <?php echo $contact['IDBoutique']; ?><br />
+			<strong class="titre"><?php echo $contact['IDBoutique']; ?></strong><br />
 			Le responsable de cette boutique est <?php echo $contact['prenom'] . ' ' . $contact['nom']; ?><br />
-			<em>Contacter</em> : <br />
-			Adresse : <?php echo $contact['adresse']; ?><br />
-			Telephone : <?php echo $contact['telephone']; ?><br />
-			Mail : <?php echo $contact['IDEmploye'] . '@ens.uvsq.fr'; ?>
+			<em>Adresse</em> : <?php echo $contact['adresse']; ?><br />
+			<em>Telephone</em> : <?php echo $contact['telephone']; ?><br />
+			<em>Mail</em> : <?php echo $contact['IDEmploye'] . '@ens.uvsq.fr'; ?>
 			<?php
 			if(strcmp($_SESSION['type'], 'responsable') == 0 && strcmp($contact['IDBoutique'], $_SESSION['boutique']) == 0) {
 				$comptas = $bdd->query('SELECT * FROM compta1 c1, compta2 c2, compta3 c3 WHERE c1.refBoutique = c2.refBoutique AND c1.refBoutique = c3.refBoutique');

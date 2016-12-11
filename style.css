@@ -18,7 +18,6 @@ header {
 }
 
 footer {
-	bottom: 0;
 	height: 15px;
 	background-color: #D6D6D6;
 }
@@ -31,27 +30,68 @@ footer {
 	padding: 5px 10px 5px 10px;
 }
 
-#menu a { 
+#menu a { margin-left: 7%; }
+a:hover, a:focus, a:active {color: red;}
+a {
 	text-decoration: none;
-	margin-left: 10%;
+	color: blue;
 }
-#menu a:hover, a:focus, a:active {color: red;}
 
 .infos {
-	/* Bienvenue, ou, vous travaillez à ... */
+	text-align: right;
+	font-family : Helvetica, Vercana, sans-serif;
 }
 
 .connexion {
 	background-color: #D6D6D6;
 	border: 3px solid black;
 	border-radius: 10px;
-	min-width: 150px;
+	width: 180px;
 	padding: 5px 5px 5px 5px;
 	float: right;
+	font-family: Georgia, Times New Roman, serif;
+	text-align: justify;
 }
 
 .contenu {
-	border: 1px solid blue;
+	border: 3px solid black;
 	width: 80%;
 	margin: auto;
+}
+
+h1 {
+	font-size: 32px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-shadow: 3px 3px 2px grey;
+	text-align: center;
+}
+.contenu h1 { font-size: 26px; }
+
+p {
+	width: 50%;
+	text-align: justify;
+	font-family: Georgia, Times New Roman, serif;
+	margin-left: 50px;
+}
+.titre { text-decoration: underline; color: red; }
+em { font-weight: bold; }
+input {
+	margin-bottom: 3px;
+	padding-left: 5px;
+}
+input[type=text]:focus, input[type=submit]:hover {
+    border-color:#333;
+}
+input[type=submit] { background : #ccc; }
+
+#recherche fieldset{
+	width: 90%;
+	margin: auto;
+	margin-bottom: 20px;
+}
+#recherche legend { font-weight: bold; }
+#recherche li {
+	display: inline-block;
+	list-style: none;
+	width: 13em;
 }
