@@ -2,19 +2,18 @@
 <html>
     <head>
         <title>Articles</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="style.css" type="text/css" />
         <meta charset="utf-8" />
     </head>
     
     <body>
 		<?php
 		include("includes/session.php");
-		include("includes/menu.php");
 		include("includes/header.php");
-		include("includes/footer.php");
+		include("includes/menu.php");
+		include("includes/login.php");
 		?>
-		<!-- L'utilisateur est forcément employe sur cette page -->
-		<!-- Index (ancres), articles de la boutique de l'employe, 2 formulaires commande/vente -->
+		<div class="contenu">
 			<h1>Gestion d'articles</h1>
         
 <!-- liste du stock de la boutique -->
@@ -75,6 +74,7 @@
 				</fieldset>
 			</form>
 		</section>
-		
+		</div>
+		<?php include("includes/footer.php");?>
     </body>
 </html>

@@ -2,17 +2,18 @@
 <html>
     <head>
         <title>Nos boutiques</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="style.css" type="text/css" />
         <meta charset="utf-8" />
     </head>
     
     <body>
 		<?php
 		include("includes/session.php");
-		include("includes/menu.php");
 		include("includes/header.php");
-		include("includes/footer.php");
+		include("includes/menu.php");
+		include("includes/login.php");
 		?>
+		<div class="contenu">
 			<h1>Nos Boutiques</h1>
 		<?php
 		$contacts = $bdd->query('SELECT E.nom, E.prenom, E.IDEmploye, B.IDBoutique, B.adresse, B.telephone FROM Employe E, Boutique B WHERE E.IDEmploye = B.IDResponsable');
@@ -40,9 +41,8 @@
 		</p>
 		<?php
 		}
-
-		$contacts->closeCursor();
-		?>
-		
+		$contacts->closeCursor(); ?>
+		</div>
+		<?php include("includes/footer.php");?>
     </body>
 </html>

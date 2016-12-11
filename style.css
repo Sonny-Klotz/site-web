@@ -1,1 +1,57 @@
+body {
+	background-color: #E6F7FE;
+}
 
+.layout {
+	border: 5px double black;
+	border-radius: 10px;
+	position: fixed;
+	width: 96%;
+	margin: auto;
+	padding: 0px 10px 0px 10px;
+}
+
+header {
+	top: 0;
+	background-color: #D6D6D6;
+	height: 100px;
+}
+
+footer {
+	bottom: 0;
+	height: 15px;
+	background-color: #D6D6D6;
+}
+
+#menu {
+	border: 3px solid black;
+	border-radius: 10px;
+	margin-top: 108px;
+	background-color: #A7D6FE;
+	padding: 5px 10px 5px 10px;
+}
+
+#menu a { 
+	text-decoration: none;
+	margin-left: 10%;
+}
+#menu a:hover, a:focus, a:active {color: red;}
+
+.infos {
+	/* Bienvenue, ou, vous travaillez à ... */
+}
+
+.connexion {
+	background-color: #D6D6D6;
+	border: 3px solid black;
+	border-radius: 10px;
+	min-width: 150px;
+	padding: 5px 5px 5px 5px;
+	float: right;
+}
+
+.contenu {
+	border: 1px solid blue;
+	width: 80%;
+	margin: auto;
+}

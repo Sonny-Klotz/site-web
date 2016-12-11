@@ -26,20 +26,19 @@ function condition($bdd) {
 <html>
     <head>
         <title>Resultats</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="style.css" type="text/css" />
         <meta charset="utf-8" />
     </head>
     
     <body>
 		<?php
 		include("includes/session.php");
-		include("includes/menu.php");
 		include("includes/header.php");
-		include("includes/footer.php");
+		include("includes/menu.php");
+		include("includes/login.php");
 		?>
-		
-		<h1>Résultats de la recherche</h1>
-		
+		<div class="contenu">
+			<h1>Résultats de la recherche</h1>
 		<?php
 		$modeles = $bdd->query('SELECT modele FROM Stock ' . condition($bdd));
 		?>
@@ -71,5 +70,7 @@ function condition($bdd) {
 			</tbody>
 		</table>
 		<a href="recherche.php">Faire une autre recherche</a>
+		</div>
+		<?php include("includes/footer.php");?>
     </body>
 </html>

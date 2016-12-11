@@ -2,18 +2,18 @@
 <html>
     <head>
         <title>Recherche</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="style.css" type="text/css" />
         <meta charset="utf-8" />
     </head>
     
     <body>
 		<?php
 		include("includes/session.php");
-		include("includes/menu.php");
 		include("includes/header.php");
-		include("includes/footer.php");
+		include("includes/menu.php");
+		include("includes/login.php");
 		?>
-		
+		<div class="contenu">
 			<h1>Recherche d'articles</h1>
 			
 		<form  action="articles.php" method="post">
@@ -30,5 +30,7 @@
 			</fieldset>
 			<input type="submit" value="Rechercher" />
 		</form>
+		</div>
+		<?php include("includes/footer.php");?>
     </body>
 </html>
