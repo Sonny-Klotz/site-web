@@ -17,27 +17,28 @@
 			<h1>Gestion du personnel</h1>
 
 <!-- liste employés de la boutique du responsable -->
-		<p>
-			<strong>Employes</strong> : <br />
+		<ul>
 		<?php
 		$employes = $bdd->query('SELECT nom, prenom, IDEmploye FROM Employe WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
 		while ($employe = $employes->fetch()) {
-			echo $employe['prenom'] . ' ' . $employe['nom']; ?> -
+			echo '<li>' . $employe['prenom'] . ' ' . $employe['nom']; ?> -
 			<?php echo $employe['IDEmploye'] . '@ens.uvsq.fr';
 			if(strcmp($employe['IDEmploye'], $_SESSION['login']) == 0)
 				echo ' - <em>Responsable</em>';
-			?> <br />
+			?>
+			</li>
 		<?php
 		}
 		$employes->closeCursor();
 		?>
-		</p>
+		</ul>
 		
 <!--licensiement d'employés -->
 		<section id="licenciement">
 			<form action="licenciement.php" method="post">
 				<fieldset>
 				<legend><strong>Licencier</strong></legend>
+					<label for="id">Employé : </label>
 					<select name="id">
 					<?php
 					$employes = $bdd->query('SELECT nom, prenom, IDEmploye FROM Employe WHERE refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '" AND IDEmploye NOT IN (SELECT IDResponsable FROM Boutique)');
@@ -58,15 +59,15 @@
 				<fieldset>
 				<legend><strong>Recruter</strong></legend>
 					<label for="nom">Nom : </label>
-					<input type="text" name="nom" /><br />
+					<input type="text" name="nom"  placeholder="Nom" /><br />
 					<label for="prenom">Prenom : </label>
-					<input type="text" name="prenom" /><br />
+					<input type="text" name="prenom" placeholder='Prenom' /><br />
 					<label for="identifiant">Identifiant : </label>
-					<input type="text" name="identifiant" /><br />
+					<input type="text" name="identifiant"  placeholder="16 car. max" /><br />
 					<label for="mdp">Mot de passe : </label>
-					<input type="password" name="mdp" /><br />
+					<input type="password" name="mdp" placeholder="Mot de passe" /><br />
 					<label for="salaire">Salaire : </label>
-					<input type="number" name="salaire" min=0 max=8388607/><br />
+					<input type="number" name="salaire" min=0 max=8388607 placeholder='Nombre' />
 					<input type="submit" value="Embaucher" />
 				</fieldset>
 			</form>

@@ -101,7 +101,7 @@ INSERT INTO Employe VALUES
 	("younes.ben-yamna", "Ben Yamna", "Younes", 4500, "Le Club", "mdp"),
 	("andy.lequeux", "Lequeux", "Andy", 6700, "La Défense", "mdp");
 UPDATE Boutique SET IDResponsable="sonny.klotz" WHERE IDBoutique LIKE "Versailles";
-UPDATE Boutique SET IDResponsable="malek.zemni" WHERE IDBoutique LIKE "De poche en poche";
+UPDATE Boutique SET IDResponsable="malek.zemni" WHERE IDBoutique LIKE "Decathlon";
 UPDATE Boutique SET IDResponsable="andy.lequeux" WHERE IDBoutique LIKE "La Défense";
 UPDATE Boutique SET IDResponsable="younes.ben-yamna" WHERE IDBoutique LIKE "Le Club";
 

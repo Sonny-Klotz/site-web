@@ -26,18 +26,22 @@
 			<em>Adresse</em> : <?php echo $contact['adresse']; ?><br />
 			<em>Telephone</em> : <?php echo $contact['telephone']; ?><br />
 			<em>Mail</em> : <?php echo $contact['IDEmploye'] . '@ens.uvsq.fr'; ?>
+		</p>
 			<?php
 			if(strcmp($_SESSION['type'], 'responsable') == 0 && strcmp($contact['IDBoutique'], $_SESSION['boutique']) == 0) {
 				$comptas = $bdd->query('SELECT * FROM compta1 c1, compta2 c2, compta3 c3 WHERE c1.refBoutique = c2.refBoutique AND c1.refBoutique = c3.refBoutique');
 				while(($compta = $comptas->fetch()) && strcmp($compta['refBoutique'], $_SESSION['boutique']) != 0)
 					;
 			?>
-				<br /><em>Chiffres</em> : <br />
-			Salaires : <?php echo $compta['salaires'] . '€'; ?><br />
-			Commandes : <?php echo $compta['commandes'] . '€'; ?><br />
-			Ventes : <?php echo $compta['ventes'] . '€';
-			}?>
-		</p>
+			<p id="compta">
+				<strong>Compta de la boutique <?php echo $_SESSION["boutique"];?></strong> : <br />
+			<em>Salaires</em> : <?php echo $compta['salaires'] . '€'; ?><br />
+			<em>Commandes</em> : <?php echo $compta['commandes'] . '€'; ?><br />
+			<em>Ventes</em> : <?php echo $compta['ventes'] . '€';?>
+			<?php
+			}
+			?>
+			</p>
 		<?php
 		}
 		$contacts->closeCursor(); ?>

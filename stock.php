@@ -17,18 +17,17 @@
 			<h1>Gestion d'articles</h1>
         
 <!-- liste du stock de la boutique -->
-		<p>
-			<strong>Articles</strong> : <br />
+		<ul id="larticle">
 		<?php
 		$articles = $bdd->query('SELECT * FROM Stock WHERE total > 0 AND refBoutique LIKE ' . '"' . $_SESSION['boutique'] . '"');
 		while ($article = $articles->fetch()) {
-			echo $article['modele']?> -
-			<?php echo $article['total']; ?> <br />
+			echo '<li>' . $article['modele']?> -
+			<?php echo $article['total']; ?> </li>
 		<?php
 		}
 		$articles->closeCursor();
 		?>
-		</p>
+		</ul>
 		
 <!--vente d'articles -->
 		<section id="vente">
@@ -67,9 +66,9 @@
 					?>
 					</select><br />
 					<label for="quantite">Quantite : </label>
-					<input type="number" name="quantite" min=0 max=8388607><br />
+					<input type="number" name="quantite" min=0 max=8388607 placeholder="Nombre"><br />
 					<label for="dateCommande">Date : </label>
-					<input type="date" name="dateCommande" /><br />
+					<input type="date" name="dateCommande" />
 					<input type="submit" value="Commander" />
 				</fieldset>
 			</form>
