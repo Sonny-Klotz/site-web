@@ -75,7 +75,7 @@ SELECT refBoutique, sum(salaire)
 FROM Employe GROUP BY refBoutique;
 
 CREATE VIEW compta2 (refBoutique, commandes) AS
-SELECT CrefBoutique, sum(C.quantite * F.prixFournisseur)
+SELECT refBoutique, sum(C.quantite * F.prixFournisseur)
 FROM Commander C, Fournisseur F
 WHERE C.modele = F.modele
 GROUP BY refBoutique;
@@ -94,10 +94,10 @@ INSERT INTO Boutique VALUES
 	("Versailles", NULL, "0139257800", "45 avenue des etats-unis, 78000 Versailles"),
 	("La Défense", NULL, "0141023030", "Les Quatre Temps - Le Parvis de la Défense, 92800 Puteaux"),
 	("Le Club", NULL, "0141023030", "8 rue Charles Michels, 93200 Saint-Denis"),
-	("De poche en poche", NULL, "0148133540", "2 Rue Catulienne, 93200 Saint-Denis");
+	("Decathlon", NULL, "0148133540", "2 Rue Catulienne, 93200 Saint-Denis");
 INSERT INTO Employe VALUES
 	("sonny.klotz", "Klotz", "Sonny", 7000, "Versailles", "mdp"),
-	("malek.zemni", "Zemni", "Malek", 8388607, "De poche en poche", "mdp"),
+	("malek.zemni", "Zemni", "Malek", 8388607, "Decathlon", "mdp"),
 	("younes.ben-yamna", "Ben Yamna", "Younes", 4500, "Le Club", "mdp"),
 	("andy.lequeux", "Lequeux", "Andy", 6700, "La Défense", "mdp");
 UPDATE Boutique SET IDResponsable="sonny.klotz" WHERE IDBoutique LIKE "Versailles";
@@ -120,7 +120,7 @@ INSERT INTO Fournisseur VALUES
 	("Le stimulant", 180),
 	("Le blindé", 750),
 	("Le classique", 500),
-	("L'escapolope", 600),
+	("L'escalope", 600),
 	("Le steak", 450);
 
 /* Création des utilisateurs et des droits d'accès */
